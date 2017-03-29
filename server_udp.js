@@ -13,9 +13,9 @@ server.on('message', function (message, remote) {
     console.log(remote.address + ':' + remote.port +' - ' + message);
 
     //answer
-    server.send("pong", remote.port, remote.address, (d) => { console.log("sent pong to client") });
+    server.send("pong", remote.port, remote.address, (d) => { /*console.log("sent pong to client")*/ });
 });
 
-
-
 server.bind(PORT, HOST);
+
+//start ab -n 10000 -c 100 https://sofa.zdf.de/lua
