@@ -16,8 +16,10 @@ server {
     location /lua {
       access_log /var/log/nginx/access_lua.log;
 	    #rewrite_by_lua_file /etc/nginx/lua/rewrite.lua;
-	    #access_by_lua_file /etc/nginx/lua/access.lua;
-	    content_by_lua_file /etc/nginx/lua/content.lua;
+	    access_by_lua_file /etc/nginx/lua/content.lua;
+	    #content_by_lua_file /etc/nginx/lua/content.lua;
+      #resume normale operation
+
 	}
 }
 
