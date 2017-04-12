@@ -1,7 +1,7 @@
 #!/usr/bin/env lua5.2
 --[[
 
-  apt-get install lua5.2 lua-socket nginx-extras
+  apt-get install lua5.2 lua-socket lua-md5 nginx-extras
   test ab -n 10000 -c 100 http://test.zdf.de/lua
   curl "http://test.zdf.de/lua?start=2017-04-12T11%3A57%3A55%2B02%3A00&asset=SCMS_98920390-08d1-42aa-a7d2-051f5d76c85f&user=22f5f987-4b49-454e-a45b-808d970f281c&eventType=view"
 
@@ -22,6 +22,7 @@ server {
 }
 
 ]]--
+local md5 = require("md5")
 local socket = require("socket")
 local udp = assert(socket.udp())
 local data
@@ -45,10 +46,8 @@ st = ngx.var.arg_start or "undefined"
 at = ngx.var.arg_asset or "undefined"
 ur = ngx.var.arg_user or "undefined"
 
-et = unescape(et)
 st = unescape(st)
-at = unescape(at)
-ur = unescape(ur)
+ur = md5.sumhexa(ur)
 
 Event = "{"
 Event = Event .. 'User-Agent: "' .. ngx.req.get_headers()["User-Agent"] .. '",'
