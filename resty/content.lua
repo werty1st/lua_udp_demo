@@ -22,8 +22,10 @@ server {
 
 	}
 }
+  
 
 ]]--
+--package.path = package.path .. '/opt/openresty/lualib/resty/?'
 
 local md5 = require("md5")
 local socket = require("socket")
@@ -70,9 +72,5 @@ assert(udp:send( Event ))
 assert(udp:setpeername("127.0.0.1", port))
 assert(udp:send( Event ))
 
-ngx.say("target")
-ngx.say(target)
 
-ngx.say("port")
-ngx.say(port)
 
