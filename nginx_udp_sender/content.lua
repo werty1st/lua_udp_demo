@@ -1,29 +1,4 @@
-#!/usr/bin/env lua5.2
---[[
-
-  apt-get install lua5.2 lua-socket lua-md5 nginx-extras
-  test ab -n 10000 -c 100 http://test.zdf.de/lua
-  curl "http://test.zdf.de/lua?start=2017-04-12T11%3A57%3A55%2B02%3A00&asset=SCMS_98920390-08d1-42aa-a7d2-051f5d76c85f&user=22f5f987-4b49-454e-a45b-808d970f281c&eventType=view"
-
-server {
-	listen 443 ssl;
-
-  ssl_certificate /etc/nginx/ssl/nginx.crt;
-  ssl_certificate_key /etc/nginx/ssl/nginx.key;
-
-	server_name test.zdf.de;
-
-    location /lua {
-      access_log /var/log/nginx/access_lua.log;
-	    #rewrite_by_lua_file /etc/nginx/lua/rewrite.lua;
-	    access_by_lua_file /etc/nginx/lua/content.lua;
-	    #content_by_lua_file /etc/nginx/lua/content.lua;
-      #resume normale operation
-
-	}
-}
-
-]]--
+#!/usr/bin/env lua5.1
 
 local md5 = require("md5")
 local socket = require("socket")
@@ -32,6 +7,7 @@ local data
 
 local target = os.getenv("RECEIVER_IP")
 local port = os.getenv("RECEIVER_PORT")
+local debug = os.getenv("DEBUG")
 
 udp:settimeout(0)
 assert(udp:setsockname("*",0))
@@ -66,13 +42,14 @@ Event = Event .. "}"
 --send to remote
 assert(udp:send( Event ))
 
---send to localhost (debugging)
-assert(udp:setpeername("127.0.0.1", port))
-assert(udp:send( Event ))
+if debug ~= nil then
+  --send to localhost (debugging)
+  assert(udp:setpeername("127.0.0.1", port))
+  assert(udp:send( Event ))
 
-ngx.say("target")
-ngx.say(target)
+  --responde with env settings
+  ngx.say("target: " .. target)
+  ngx.say("port: " .. port)
+end
 
-ngx.say("port")
-ngx.say(port)
 
