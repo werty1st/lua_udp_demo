@@ -1,0 +1,5 @@
+#run
+docker run --rm --entrypoint=watch byrnedo/alpine-curl curl 'http://wmaiz-v-sofa-int-05.dbc.zdf.de:8282/lua/?start=2017-04-12T11%3A57%3A55%2B02%3A00&asset=SCMS_98920390-08d1-42aa-a7d2-051f5d76c85f&user=22f5f987-4b49-454e-a45b-808d970f281c&eventType=view'
+
+#run debug
+docker run --rm --entrypoint="/bin/sh" byrnedo/alpine-curl
