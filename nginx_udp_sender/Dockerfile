@@ -25,7 +25,7 @@ COPY nginx.conf /nginx/nginx.conf
 #docker run -it --rm -p 8282:80 -e DEBUG=true -e RECEIVER_IP="172.29.40.8" -e RECEIVER_PORT=3004 luaudpsender2
 
 #poc
-#docker run -it --rm  -p 80 -e RECEIVER_IP="172.23.61.5" -e RECEIVER_PORT=3004 luaudpsender2
+#docker run -it --rm  -p 80 -e RECEIVER_IP="172.23.61.5" -e RECEIVER_PORT=3009 luaudpsender2
 
 
 # export image
