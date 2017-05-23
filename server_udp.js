@@ -13,7 +13,12 @@ server.on('message', function (message, remote) {
     console.log(remote.address + ':' + remote.port +' - ' + message);
 
     //answer
-    server.send("pong", remote.port, remote.address, (d) => { /*console.log("sent pong to client")*/ });
+    try{
+        server.send("pong", remote.port, remote.address, (d) => { /*console.log("sent pong to client")*/ });
+    } catch (e){
+	//console.error("answering client failed",e);
+    }
+
 });
 
 server.bind(PORT, HOST);
